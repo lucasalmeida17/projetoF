@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Turismo</title>
+    <!-- Links para a estilização-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<header>
+
+    <body class="bg-light">
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="index.html">Rota Bragantina</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto text-white">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Início</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Destinos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="ati.html">Atibaia</a></li>
+                                <li><a class="dropdown-item" href="https://www.bjperdoes.sp.gov.br/">Bom Jesus dos Perdões</a></li>
+                                <li><a class="dropdown-item" href="bra.html">Bragança Paulista</a></li>
+                                <li><a class="dropdown-item" href="https://www.joanopolis.sp.gov.br/">Joanópolis</a></li>
+                                <li><a class="dropdown-item" href="https://www.nazarepaulista.sp.gov.br/">Nazaré Paulista</a></li>
+                                <li><a class="dropdown-item" href="https://www.pedrabela.sp.gov.br/">Pedra Bela</a></li>
+                                <li><a class="dropdown-item" href="https://www.pinhalzinho.sp.gov.br/">Pinhalzinho</a></li>
+                                <li><a class="dropdown-item" href="https://www.piracaia.sp.gov.br/">Piracaia</a></li>
+                                <li><a class="dropdown-item" href="https://socorro.tur.br/">Socorro</a></li>
+                                <li><a class="dropdown-item" href="https://tuiuti.sp.gov.br/">Tuiuti</a></li>
+                                <li><a class="dropdown-item" href="https://www.vargem.sp.gov.br/">Vargem</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item" style="margin-right: 20px;">
+                            <a class="nav-link active" aria-current="page" href="cadastro.html">Cadastro</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>        
+</header>
+<div class="container mt-3">
+    <h2>Cadastro de Usuário</h2>
+    <form id="formCadastro" onsubmit="return validarFormulario(event)">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome Completo</label>
+            <input type="text" class="form-control" id="nome" placeholder="Digite seu nome completo">
+            <div class="invalid-feedback" id="nomeFeedback"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Digite seu email">
+            <div class="invalid-feedback" id="emailFeedback"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" placeholder="Digite sua senha">
+            <div class="invalid-feedback" id="senhaFeedback"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmSenha" class="form-label">Confirmar Senha</label>
+            <input type="password" class="form-control" id="confirmSenha" placeholder="Confirme sua senha">
+            <div class="invalid-feedback" id="confirmSenhaFeedback"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function validarFormulario(event) {
+        event.preventDefault(); // Impede o envio do formulário
+
+        limparErros();
+
+        let isValid = true;
+
+
+        const nome = document.getElementById('nome');
+        if (nome.value.trim() === '') {
+            mostrarErro(nome, 'O nome completo é obrigatório.');
+            isValid = false;
+        }
+
+
+        const email = document.getElementById('email');
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email.value.trim())) {
+            mostrarErro(email, 'Digite um email válido.');
+            isValid = false;
+        }
+
+
+        const senha = document.getElementById('senha');
+        if (senha.value.length < 6) {
+            mostrarErro(senha, 'A senha deve ter pelo menos 6 caracteres.');
+            isValid = false;
+        }
+
+
+        const confirmSenha = document.getElementById('confirmSenha');
+        if (confirmSenha.value !== senha.value) {
+            mostrarErro(confirmSenha, 'As senhas não coincidem.');
+            isValid = false;
+        }
+
+
+        if (isValid) {
+            alert('Cadastro realizado com sucesso!');
+            document.getElementById('formCadastro').reset();
+        }
+
+        return isValid;
+    }
+
+
+    function mostrarErro(input, mensagem) {
+        const feedback = input.nextElementSibling;
+        input.classList.add('is-invalid');
+        feedback.textContent = mensagem;
+    }
+
+
+    function limparErros() {
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.classList.remove('is-invalid');
+        });
+
+        const feedbacks = document.querySelectorAll('.invalid-feedback');
+        feedbacks.forEach(feedback => {
+            feedback.textContent = '';
+        });
+    }
+</script>
+<br>
+<br>
+<br>
+<footer id="contato" class="text-white py-4"
+    style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 39%, rgba(52,152,219,1) 100%);">
+    <div class="container text-center">
+        <h3 class="h4 mb-3">Entre em Contato</h3>
+        <p class="mb-2">E-mail: rotabragantinacontato@gmail.com.br</p>
+        <p class="mb-2">Telefone: +55 11 98765-4321</p>
+        <p class="small mt-3">© 2024 Turismo. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+
+<!-- Scripts do Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
